@@ -1,6 +1,7 @@
 setopt interactivecomments
 # setup_mac.sh
 
+
 # Without the setopt command zsh will sometimes give an error message about # not recognized
 
 # Install homebrew
@@ -15,22 +16,19 @@ brew install git
 brew tap microsoft/git
 brew install --cask git-credential-manager-core
 
-## Configure git globally
-echo "Configuring git name and email globally "
-read  "gitusername?Enter git user.name"
-git config --global user.name $gitusername
-read  "gituseremail?Enter git user.email" 
-git config --global user.email $gituseremail
-git config --global init.defaultBranch main
 
 # Create a directory for repos
-echo "Creating code directory"
+if [ -d ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions ] ; 
+then echo "cd code" 
+     cd code;
+else echo "Creating code directory"
 mkdir -p code
-cd code
+cd code;
+fi
 
 # Remove the dotfiles repo if it already exists and restore from the source
 if [ -d dotfiles ]; then rm -rf dotfiles ; fi
-git clone https://github.com/erika-e/dotfiles.git
+git clone https://github.com/Altons/dotfiles.git
 cd dotfiles
 
 # Install dependencies from Brewfile
@@ -61,6 +59,9 @@ ln -s ~/code/dotfiles/oh-my-zsh/*.zsh ~/.oh-my-zsh/custom
 # Copy and source ~/.zshrc
 cp .zshrc ~/.zshrc
 source ~/.zshrc
+
+git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ~/powerlevel10k
+echo 'source ~/powerlevel10k/powerlevel10k.zsh-theme' >>~/.zshrc
 
 # Install extensions for VSCode
 # https://unix.stackexchange.com/questions/149726/how-to-parse-each-line-of-a-text-file-as-an-argument-to-a-command

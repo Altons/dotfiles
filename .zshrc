@@ -1,106 +1,158 @@
-ZSH_DISABLE_COMPFIX=true
+# If you come from bash you might have to change your $PATH.
+# export PATH=/"usr/local/opt/python@3.7/bin:/usr/local/bin:$HOME/bin:$PATH"
+
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+
+
+
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
 
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ZSH="/Users/erikapullum/.oh-my-zsh"
+export ZSH="$HOME/.oh-my-zsh"
 
-# Set name of the theme to load --- if set to "random", it will
-# load a random theme each time oh-my-zsh is loaded, in which case,
-# to know which specific one was loaded, run: echo $RANDOM_THEME
-# See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-ZSH_THEME="robbyrussell"
+ZSH_THEME="powerlevel10k/powerlevel10k"
 
-# Set list of themes to pick from when loading at random
-# Setting this variable when ZSH_THEME=random will cause zsh to load
-# a theme from this variable instead of looking in $ZSH/themes/
-# If set to an empty array, this variable will have no effect.
-# ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" )
 
-# Uncomment the following line to use case-sensitive completion.
-# CASE_SENSITIVE="true"
+plugins=(
+   git
+  ssh-agent
+  zsh-autosuggestions
+)
 
-# Uncomment the following line to use hyphen-insensitive completion.
-# Case-sensitive completion must be off. _ and - will be interchangeable.
-# HYPHEN_INSENSITIVE="true"
-
-# Uncomment one of the following lines to change the auto-update behavior
-# zstyle ':omz:update' mode disabled  # disable automatic updates
-# zstyle ':omz:update' mode auto      # update automatically without asking
-# zstyle ':omz:update' mode reminder  # just remind me to update when it's time
-
-# Uncomment the following line to change how often to auto-update (in days).
-# zstyle ':omz:update' frequency 13
-
-# Uncomment the following line if pasting URLs and other text is messed up.
-# DISABLE_MAGIC_FUNCTIONS="true"
-
-# Uncomment the following line to disable colors in ls.
-# DISABLE_LS_COLORS="true"
-
-# Uncomment the following line to disable auto-setting terminal title.
-# DISABLE_AUTO_TITLE="true"
-
-# Uncomment the following line to enable command auto-correction.
-# ENABLE_CORRECTION="true"
-
-# Uncomment the following line to display red dots whilst waiting for completion.
-# You can also set it to another string to have that shown instead of the default red dots.
-# e.g. COMPLETION_WAITING_DOTS="%F{yellow}waiting...%f"
-# Caution: this setting can cause issues with multiline prompts in zsh < 5.7.1 (see #5765)
-# COMPLETION_WAITING_DOTS="true"
-
-# Uncomment the following line if you want to disable marking untracked files
-# under VCS as dirty. This makes repository status check for large repositories
-# much, much faster.
-# DISABLE_UNTRACKED_FILES_DIRTY="true"
-
-# Uncomment the following line if you want to change the command execution time
-# stamp shown in the history command output.
-# You can set one of the optional three formats:
-# "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
-# or set a custom format using the strftime function format specifications,
-# see 'man strftime' for details.
-# HIST_STAMPS="mm/dd/yyyy"
-
-# Would you like to use another custom folder than $ZSH/custom?
-# ZSH_CUSTOM=$HOME/code/dotfiles
-# If you set your custom folder somewhere else and want to put back the default
-# use the line below
-# ZSH_CUSTOM=$HOME/.oh-my-zsh/custom
-
-# Which plugins would you like to load?
-# Standard plugins can be found in $ZSH/plugins/
-# Custom plugins may be added to $ZSH_CUSTOM/plugins/
-# Example format: plugins=(rails git textmate ruby lighthouse)
-# Add wisely, as too many plugins slow down shell startup.
-plugins=(git zsh-autosuggestions)
 
 source $ZSH/oh-my-zsh.sh
 
-# User configuration
 
-# You may need to manually set your language environment
-# export LANG=en_US.UTF-8
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-# Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
-# else
-#   export EDITOR='mvim'
-# fi
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-# Compilation flags
-# export ARCHFLAGS="-arch x86_64"
+fpath=(/usr/local/share/zsh-completions $fpath)
 
-# Set personal aliases, overriding those provided by oh-my-zsh libs,
-# plugins, and themes. Aliases can be placed here, though oh-my-zsh
-# users are encouraged to define aliases within the ZSH_CUSTOM folder.
-# For a full list of active aliases, run `alias`.
-#
-# Example aliases
-# alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/Users/alberto.negron/miniconda/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/Users/alberto.negron/miniconda/etc/profile.d/conda.sh" ]; then
+        . "/Users/alberto.negron/miniconda/etc/profile.d/conda.sh"
+    else
+        export PATH="/Users/alberto.negron/miniconda/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
 
-# Personal alias files are kept in dotfiles/oh-my-zsh
+
+
+#   Smarter Shorcuts
+#   ------------------------------------------------------------
+alias cp='cp -iv'                           # Preferred 'cp' implementation
+alias mv='mv -iv'                           # Preferred 'mv' implementation
+alias mkdir='mkdir -pv'                     # Preferred 'mkdir' implementation
+alias ll='exa -la'                          # Preferred 'ls' implementation
+alias ls='exa'
+alias cat='bat'
+alias lsd='exa -l | grep "^d"'               # List only directories
+alias la="exa -lha"                          # List all files colorized in long format, including dot files
+cd() { builtin cd "$@"; ll; }               # Always list directory contents upon 'cd'
+alias cd..='cd ../'                         # Go back 1 directory level (for fast typers)
+alias ..='cd ../'                           # Go back 1 directory level
+alias ...='cd ../../'                       # Go back 2 directory levels
+alias .3='cd ../../../'                     # Go back 3 directory levels
+alias .4='cd ../../../../'                  # Go back 4 directory levels
+alias .5='cd ../../../../../'               # Go back 5 directory levels
+alias .6='cd ../../../../../../'            # Go back 6 directory levels
+alias path='echo -e ${PATH//:/\\n}'         # path:         Echo all executable Paths
+alias c='clear'                             # c:            Clear terminal display
+alias edit='code --wait'                           # edit:         Opens any file in sublime editor
+mcd () { mkdir -p "$1" && cd "$1"; }        # mcd:          Makes new Dir and jumps inside
+#####  Rails
+alias be='bundle exec'
+alias br='bin/rails'
+alias cop='rubocop -a'
+# git
+alias dbranch="git branch --merged | egrep -v '(^\*|master|dev)' | xargs git branch -d"
+### Open configuration
+alias openalias="code ~/.zshrc"
+alias loadalias="source ~/.zshrc"
+alias ohmyzsh="code ~/.oh-my-zsh"
+alias tf=terraform
+
+#   -------------------------------
+#   FILE AND FOLDER MANAGEMENT
+#   -------------------------------
+
+zipf () { zip -r "$1".zip "$1" ; }          # zipf:         To create a ZIP archive of a folder
+alias numFiles='echo $(ls -1 | wc -l)'      # numFiles:     Count of non-hidden files in current dir
+alias make1mb='mkfile 1m ./1MB.dat'         # make1mb:      Creates a file of 1mb size (all zeros)
+alias make5mb='mkfile 5m ./5MB.dat'         # make5mb:      Creates a file of 5mb size (all zeros)
+alias make10mb='mkfile 10m ./10MB.dat'      # make10mb:     Creates a file of 10mb size (all zeros)
+
+
+# mac only
+alias users="dscl . list /Users | grep -v '^_'"
+alias cleanupDS="find . -type f -name '*.DS_Store' -ls -delete"
+
+#   extract:  Extract most know archives with one command
+#   ---------------------------------------------------------
+    extract () {
+        if [ -f $1 ] ; then
+          case $1 in
+            *.tar.bz2)   tar xjf $1     ;;
+            *.tar.gz)    tar xzf $1     ;;
+            *.bz2)       bunzip2 $1     ;;
+            *.rar)       unrar e $1     ;;
+            *.gz)        gunzip $1      ;;
+            *.tar)       tar xf $1      ;;
+            *.tbz2)      tar xjf $1     ;;
+            *.tgz)       tar xzf $1     ;;
+            *.zip)       unzip $1       ;;
+            *.Z)         uncompress $1  ;;
+            *.7z)        7z x $1        ;;
+            *)     echo "'$1' cannot be extracted via extract()" ;;
+             esac
+         else
+             echo "'$1' is not a valid file"
+         fi
+    }
+
+
+
+# dbt aliases
+alias dbtr="dbt --warn-error run --fail-fast" # sensible local defaults
+alias dbtt="dbt test" # run all tests
+alias dbtb="dbt build" # run build command https://docs.getdbt.com/reference/commands/build
+alias dbtdg="dbt docs generate"
+alias dbtds="dbt docs serve"
+alias dbtc="dbt compile"
+alias dbtfresh="dbt clean" #so fresh and so clean clean
+
+# useful aliases for tools I use often when working on dbt
+alias jparser='open -a "Google Chrome" https://j2live.ttl255.com/'
+alias ychecker='open -a "Google Chrome" https://yamlchecker.com/'
+alias dbtdocs='open -a "Google Chrome" https://docs.getdbt.com/docs/introduction'
+
+# dbt Functions
+
+# Run specific model with fail fast flag
+function dbtrff() {
+   dbt run -m $1 --fail-fast
+   say done
+}
+
+# Run and test specific model with fail fast flag
+function dbtrt() {
+    dbt run -m $1 --fail-fast && dbt test -m $1 --warn-error
+    say done
+}
+
+
